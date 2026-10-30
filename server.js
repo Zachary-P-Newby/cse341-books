@@ -1,5 +1,5 @@
 import app from "./app.js";
-import { connectToDb } from "./src/db/connect.js";
+import { connectToDb} from "./src/db/connect.js";
 
 const PORT = process.env.PORT;
 if(!PORT) {
@@ -10,6 +10,7 @@ if(!PORT) {
 async function starServer(){
     try{
         await connectToDb();
+
         app.listen(PORT, () => {
             console.log(`Server listening at http://127.0.0.1:${PORT}`)
             });
