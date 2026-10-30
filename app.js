@@ -1,15 +1,10 @@
 import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
-import { connectToDb, getDb } from "./src/db/connect.js";
+import router from "./src/router.js"
 
 const app = express();
 
 app.use(express.json());
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+app.use(router);
 
 
 app.get("/", (req, res) => {
