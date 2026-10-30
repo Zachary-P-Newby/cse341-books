@@ -1,18 +1,33 @@
 import express from "express";
-import { getBooksHandler } from "./controllers/books.js";
+import { getBooksHandler, getBookbyIdHandler } from "./controllers/books.js";
 
 const router = express.Router();
 
 
 //GET routes
 router.get("/books", getBooksHandler);
+router.get("/books/:id", getBookbyIdHandler);
+
+
 
 /*
-Status Code check version of route - suggested by Duck.ai
-router.get("/books", (req, res)=>{
-    getBooksHandler(req, res);
-    console.log(res.statusCode);
+//Testing Route template used for checking if the route and controller functions send the correct response status codes and content type
+//Based research on how to check status code and content type on Duck.ai
+
+router.get(" ", async (req, res, next)=>{
+    try {
+    await getBookbyIdHandler(req, res);
+    const contentType = res.get("Content-Type") || "";
+    const isJson = contentType.toLowerCase().startsWith("application/json");
+
+    console.log({ statusCode: res.statusCode, isJson });
+  } catch (err) {
+    next(err);
+  }
+
 });
+
+
 */
 
 
