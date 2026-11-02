@@ -4,10 +4,43 @@ import { getBooksHandler, getBookbyIdHandler } from "./controllers/books.js";
 const router = express.Router();
 
 
-//GET routes
+// GET routes
+/**
+ * @swagger
+ * /books:
+ *   get:
+ *     summary: Retrieve a list of all books
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: Books returned successfully
+ *       500:
+ *         description: Internal server error
+ */
 router.get("/books", getBooksHandler);
-router.get("/books/:id", getBookbyIdHandler);
 
+/**
+ * @swagger
+ * /books/{id}:
+ *   get:
+ *     summary: Retrieve a book by its ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the book to retrieve, such as b1
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Book returned successfully
+ *       404:
+ *         description: Book not found
+ *       500:
+ *         description: Internal server error - Unable to retrieve book
+ */
+router.get("/books/:id", getBookbyIdHandler);
 
 
 /*
