@@ -83,6 +83,17 @@ const updateAuthor = async (req, res) => {
 
 const deleteAuthor = async (req, res) => {
     const id = req.params.id;
+
+    const hasBooks = await authorHasBooks(id);
+    if(hasBooks){
+        return res.status(409).json({message: 'Author has books associated with them. Cannot delete author.'});
+    }
+
+    const author = await getAuthorById(id);
+    if(author == null){
+        return res.status(404).json({message: 'Author not found'});
+    }
+
     try{
         await deleteAuthorFromDb(id);
         return res.status(200).json({message: 'Author deleted successfully'});
