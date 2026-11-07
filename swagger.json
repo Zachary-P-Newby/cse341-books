@@ -26,6 +26,63 @@
             "description": "Internal server error"
           }
         }
+      },
+      "post": {
+        "summary": "Create a new book",
+        "tags": [
+          "Books"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "title",
+                  "authorId",
+                  "publicationYear"
+                ],
+                "properties": [
+                  {
+                    "id": null,
+                    "type": "string"
+                  },
+                  {
+                    "title": null,
+                    "type": "string"
+                  },
+                  {
+                    "authorId": null,
+                    "type": "string"
+                  },
+                  {
+                    "publicationDate": null,
+                    "type": "string"
+                  }
+                ]
+              },
+              "example": {
+                "id": "b1",
+                "title": "The Hobbit",
+                "publicationDate": "1937-09-21",
+                "authorId": "a5"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Book created"
+          },
+          "400": {
+            "description": "Invalid/Missing required book fields, author does not exist or book ID already exists"
+          },
+          "500": {
+            "description": "Unable to create author"
+          }
+        }
       }
     },
     "/books/{id}": {
@@ -51,6 +108,93 @@
           },
           "500": {
             "description": "Internal server error - Unable to retrieve book"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a book by ID",
+        "tags": [
+          "Books"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The book ID."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "authorId",
+                  "publicationYear"
+                ],
+                "properties": [
+                  {
+                    "title": null,
+                    "type": "string"
+                  },
+                  {
+                    "authorId": null,
+                    "type": "string"
+                  },
+                  {
+                    "publicationDate": null,
+                    "type": "string"
+                  }
+                ]
+              },
+              "example": {
+                "title": "The Hobbit",
+                "publicationDate": "1937-09-21",
+                "authorId": "a5"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Author updated successfully"
+          },
+          "400": {
+            "description": "Missing required author fields"
+          },
+          "500": {
+            "description": "Unable to update book"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a book",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the book to delete, such as b1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "203": {
+            "description": "Book deleted successfully"
+          },
+          "404": {
+            "description": "Book not found"
+          },
+          "500": {
+            "description": "Internal server error - Unable to delete book"
           }
         }
       }
@@ -240,6 +384,9 @@
           },
           "404": {
             "description": "Author not found"
+          },
+          "409": {
+            "description": "Author has books associated with them. Cannot delete author."
           },
           "500": {
             "description": "Unable to delete author"

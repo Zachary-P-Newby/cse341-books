@@ -37,8 +37,8 @@ export async function deleteAuthor(id) {
 export async function authorHasBooks(id) {
     const db = getDb();
     const collection = db.collection('books');
-    const books = await collection.find({auhtorId:id}).toArray();
-    if(books.length <= 0){
+    const books = await collection.find({authorId:id}).toArray();
+    if(books.length > 0){
         return true;
     }
     else{
