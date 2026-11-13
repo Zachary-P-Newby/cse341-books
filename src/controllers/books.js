@@ -17,9 +17,11 @@ export async function getBookById(req, res){
         const book = await getBookByIdFromDb(id);
 
         if(book != null){
+            console.log("200");
             return res.status(200).json(book);
         }
         else{
+            console.log("404");
             return res.status(404).json({message: "Book Not Found"});
         }
     }catch(error){
@@ -92,7 +94,7 @@ export async function deleteBook(req, res){
 
     try{
         await deleteBookFromDb(id);
-        return res.status(200).json({ message: "Book deleted successfully" });
+        return res.status(203).json({ message: "Book deleted successfully" });
     }catch(error){
         console.log("Error: ", error.message);
         return res.status(500).json({ message: "Internal Server Error - Failed to delete book" });
